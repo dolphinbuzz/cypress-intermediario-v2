@@ -71,3 +71,13 @@ Cypress.Commands.add('gui_createSnippets', snippets =>{
 
   cy.get('.qa-create-snippet-button').click()
 })
+
+Cypress.Commands.add('gui_createGroup', group=>{
+  cy.visit('/groups/new')
+
+  cy.get('#group_name').type(group.name)
+  cy.get('#group_path').clear().type(group.gUrl)
+  cy.get('#group_visibility_level_10').check()
+
+  cy.contains('Create group').click()
+})

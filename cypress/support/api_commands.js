@@ -110,3 +110,35 @@ Cypress.Commands.add('api_createMilestone', (projectId, miles)=>{
         headers: {Authorization: accessToken },
     })
 })
+
+
+Cypress.Commands.add('api_createGroup',(group)=>{
+    cy.request({
+        method:'POST',
+        url:`/api/v4/groups`,
+        body:{
+            name: group.name,
+            path: group.gUrl,
+            visibility: group.visibility
+        },
+        headers: {Authorization: accessToken }
+    })
+})
+
+Cypress.Commands.add('api_getAllGroups',()=>{
+    cy.request({
+        method:'GET',
+        url: '/api/v4/groups',
+        headers: { Authorization: accessToken }
+    })
+})
+
+Cypress.Commands.add('api_deleteGroup',()=>{
+    cy.api_getAllGroups().then(res=>
+      res.body.forEach(groups=>cy.request({
+            method:`DELETE`,
+            url:`/api/v4/groups/${groups.id}`,
+            headers: { Authorization: accessToken }
+        }))
+    )
+})
