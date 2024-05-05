@@ -99,7 +99,6 @@ Cypress.Commands.add('api_createLabel', (projectId, label)=>{
     })
 })
 
-
 Cypress.Commands.add('api_createMilestone', (projectId, miles)=>{
     cy.request({
         method: 'POST',
@@ -110,7 +109,6 @@ Cypress.Commands.add('api_createMilestone', (projectId, miles)=>{
         headers: {Authorization: accessToken },
     })
 })
-
 
 Cypress.Commands.add('api_createGroup',(group)=>{
     cy.request({
