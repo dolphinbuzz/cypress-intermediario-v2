@@ -46,7 +46,7 @@ Cypress.Commands.add('gui_createProject', project => {
 Cypress.Commands.add('gui_createIssue', issue =>{
   cy.visit(`/${Cypress.env('user_name')}/${issue.project.name}/issues/new`)
 
-  cy.get('.qa-issuable-form-title').type(issue.title,)
+  cy.get('.qa-issuable-form-title').type(issue.title)
   cy.get('.qa-issuable-form-description').type(issue.description)
   cy.contains('Submit issue').click()
 })
@@ -60,4 +60,14 @@ Cypress.Commands.add('gui_setLabelOnIssue', label => {
 Cypress.Commands.add('gui_setMilestonOnIssue', miles =>{
   cy.get('.block.milestone .edit-link').click()
   cy.contains(miles.title).click()
+})
+
+Cypress.Commands.add('gui_createSnippets', snippets =>{
+  cy.visit('/snippets/new')
+
+  cy.get('.qa-snippet-title').type(snippets.title)
+  cy.get('#personal_snippet_description').type(snippets.description)
+  cy.get('.ace_content').type(snippets.file)
+
+  cy.get('.qa-create-snippet-button').click()
 })

@@ -13,6 +13,27 @@ Cypress.Commands.add('api_createProject', project => {
   })
 })
 
+Cypress.Commands.add('api_createSnippets',snippets =>{
+    cy.request({
+        method: 'POST',
+        url: `/api/v4/snippets`,
+        body:{
+            title: snippets.title,
+            description: snippets.description,
+            visibility: snippets.visibility,
+            file_name: snippets.file_name,
+            content: snippets.content,
+            files: [
+              {
+                content: snippets.files[0].content,
+                file_path: snippets.files[0].file_path
+              }
+            ]
+        },
+        headers: { Authorization: accessToken},
+    })
+})
+
 Cypress.Commands.add('api_getAllProjects',()=>{
     cy.request({
         method: 'GET',
@@ -26,6 +47,24 @@ Cypress.Commands.add('api_deleteProjects',()=>{
         res.body.forEach(project => cy.request({
             method: 'DELETE',
             url: `/api/v4/projects/${project.id}`,
+            headers: { Authorization: accessToken },
+        }))
+    )
+})
+
+Cypress.Commands.add('api_getAllSnippets',()=>{
+    cy.request({
+        method:'GET',
+        url: `/api/v4/snippets`,
+        headers: {Authorization: accessToken}
+    })
+})
+
+Cypress.Commands.add('api_deleteSnippets',()=>{
+    cy.api_getAllSnippets().then(res =>
+        res.body.forEach(snippets => cy.request({
+            method: 'DELETE',
+            url: `/api/v4/snippets/${snippets.id}`,
             headers: { Authorization: accessToken },
         }))
     )
